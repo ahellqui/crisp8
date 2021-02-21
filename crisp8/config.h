@@ -1,0 +1,8 @@
+#ifndef CRISP8_CONFIG_H
+#define CRISP8_CONFIG_H
+
+#ifndef CRISP8_DISPLAY_USE_ALPHA
+    #define CRISP8_DISPLAY_USE_ALPHA 1
+#endif
+
+#endif

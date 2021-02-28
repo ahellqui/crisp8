@@ -62,7 +62,9 @@ uint16_t crisp8StackGetSize (chip8Stack stack);
 //  A pointer to the base of the stack
 uint16_t* crisp8StackGetBase (chip8Stack stack);
 
-// Returns a pointer to the current top of the stack (the topmost item, not the base + stack size)
+// Returns a pointer to the current top of the stack (the topmost item, not the base + stack size).
+// This pointer will not update as things are pushed on or of the stack, so the function should be called anew every
+// time an updated value is desired
 //
 // Parameters:
 //  - stack: the stack to operate on

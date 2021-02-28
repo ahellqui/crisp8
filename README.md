@@ -9,6 +9,7 @@ Crisp-8 is a backend of a chip-8 emulator. It handles all the chip-8 instruction
 Look at crisp8/crisp8.h
 
 ## Examples
+Examples of how to use parts of the API can be found in the examples directory.
 *Link to reference frontend implementation that unfortunately doesn't exist yet*
 
 ## Building

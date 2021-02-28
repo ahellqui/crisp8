@@ -4,8 +4,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 project (crisp8 LANGUAGES C)
 
-# file (GLOB SOURCES crisp8/*.c crisp8/*.h)
-file (GLOB SOURCES crisp8/crisp8.c crisp8/crisp8.h)
+file (GLOB SOURCES crisp8/*.c crisp8/*.h)
 
 add_library (crisp8 ${SOURCES})
 

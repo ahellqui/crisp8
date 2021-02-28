@@ -11,6 +11,25 @@ Look at crisp8/crisp8.h
 ## Examples
 *Link to reference frontend implementation that unfortunately doesn't exist yet*
 
+## Building
+Building crisp8 requires a c compiler and cmake.
+
+### Steps for Linux based operating systems
+1. Create a build directory and cd into it
+```sh
+mkdir build
+cd build
+```
+2. Execute cmake. This is the time to choose which configuration options you want to compile in. Look them up in the options part of CMakeLists.txt.
+```sh
+cmake .. [-D<OPTION>=<ON|OFF>]
+```
+3. Execute make
+```sh
+make
+```
+4. Profit?
+
 ## NAQ (Never Asked Questions)
 - Q: Why is it called crisp-8?
   A: Because I had just finished a book by an english author when I decided on the name.

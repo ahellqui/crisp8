@@ -1,6 +1,7 @@
 #include "stack.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 // This size is viable according to someone on the internet so surely it has to be true
 #define STACK_SIZE 16
@@ -26,6 +27,12 @@ void crisp8StackInit (chip8Stack* stack)
 {
     // I don't want to malloc here, but I simply don't know how I would allocate opaque types on the stack.
     *stack = malloc (sizeof (**stack));
+    if (*stack == NULL)
+    {
+        fputs ("Out of memory in crisp8StackInit; aborting", stderr);
+        abort ();
+    }
+
     (*stack)->stackPtr = (*stack)->stack;
 }
 

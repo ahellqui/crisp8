@@ -1,6 +1,8 @@
 #include "crisp8.h"
-
 #include "stack.h"
+
+#include <stdlib.h>
+#include <stdio.h>
 
 #define MEMORY_SIZE 4096
 
@@ -41,3 +43,37 @@ struct chip8_s
     // Framerate
     uint16_t framerate;
 };
+
+void crisp8Init (chip8* emulator)
+{
+    *emulator = malloc (sizeof (**emulator));
+    if (!(*emulator))
+    {
+        fputs ("Out of memory in crisp8Init; aborting", stderr);
+        abort ();
+    }
+
+    crisp8StackInit (&(*emulator)->stack);
+}
+
+void crisp8Destroy (chip8* emulator)
+{
+    crisp8StackDestroy (&(*emulator)->stack);
+    free (*emulator);
+    *emulator = NULL;
+}
+
+void crisp8SetFramerate (chip8 emulator, uint16_t framerate)
+{
+    emulator->framerate = framerate;
+}
+
+void crisp8SetAudioCallback (chip8 emulator, audioCallback callback)
+{
+    emulator->audioCb = callback;
+}
+
+void crisp8SetInputCallback (chip8 emulator, inputCallback callback)
+{
+    emulator->inputCb = callback;
+}

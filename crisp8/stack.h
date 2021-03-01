@@ -16,7 +16,7 @@ void crisp8StackInit (chip8Stack* stack);
 // Frees all memory accociated with the stack
 //
 // Parameters:
-//  - stack: the stack to free
+//  - stack: a pointer to the stack to destroy
 void crisp8StackDestroy (chip8Stack* stack);
 
 // Pushes a 16 bit unsigned integer onto the stack.
@@ -29,7 +29,6 @@ void crisp8StackDestroy (chip8Stack* stack);
 // Return value:
 //  Negative if a stack overflow would occur
 int8_t crisp8StackPush (chip8Stack stack, uint16_t item);
-
 
 // Pops a 16 bit unsigned integer off the stack
 // If this would cause a stack underflow, nothing is popped and a negative value is returned

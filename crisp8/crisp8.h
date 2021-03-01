@@ -5,7 +5,19 @@
 
 typedef struct chip8_s* chip8;
 
-// Initialization ------------------------------------------------------
+// Initialization and deinitialization ---------------------------------
+
+// Performs neccesary initialization of the chip-8 emulator. This must be the first operation performed on a new chip8
+//
+// Parameters:
+//  - emulator: a pointer to the emulator being initialized
+void crisp8Init (chip8* emulator);
+
+// Frees all memory accociated with the emulator. This must be the last function it's used in
+//
+// Parameters:
+//  - emulator: a pointer to the emulator to destroy
+void crisp8Destroy (chip8* emulator);
 
 // The chip-8-backend isn't responsible for any sort of looping, however it needs to know the framerate its running at
 // to properly function.
@@ -38,9 +50,10 @@ void crisp8SetInputCallback (chip8 emulator, uint16_t (*callback) (void));
 // program, which is then passed into the backend in the form of an array.
 //
 // Parameters:
+//  - emulator: the used chip-8 emulator
 //  - program: an array of the chip-8 program in raw bytes
 //  - program_size: the size of program
-void crisp8InitializeProgram (uint8_t* program, uint16_t program_size);
+void crisp8InitializeProgram (chip8 emulator, uint8_t* program, uint16_t program_size);
 
 // Program execution ---------------------------------------------------
 

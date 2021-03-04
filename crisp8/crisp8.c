@@ -110,10 +110,9 @@ void crisp8SetInputCallback (chip8 emulator, inputCallback callback)
 
 void crisp8InitializeProgram (chip8 emulator, uint8_t* program, uint16_t program_size)
 {
-    // Programs are loaded into memory at adress 0x200 since the chip8 iself originally
-    // took up the first 0x1FF bytes of the host computers memory
-    memcpy (emulator->memory + 0x200, program, program_size);
-    emulator->PC = 0x200;
+    memcpy (emulator->memory + CRISP8_PROGRAM_START_ADDRESS, program, program_size);
+    emulator->PC = CRISP8_PROGRAM_START_ADDRESS;
+}
 }
 
 const uint8_t* const crisp8GetFramebuffer (chip8 emulator)

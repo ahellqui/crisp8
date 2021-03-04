@@ -115,3 +115,8 @@ void crisp8InitializeProgram (chip8 emulator, uint8_t* program, uint16_t program
     memcpy (emulator->memory + 0x200, program, program_size);
     emulator->PC = 0x200;
 }
+
+const uint8_t* const crisp8GetFramebuffer (chip8 emulator)
+{
+    return emulator->display;
+}

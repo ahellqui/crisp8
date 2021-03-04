@@ -8,6 +8,8 @@ file (GLOB SOURCES crisp8/*.c crisp8/*.h)
 
 add_library (crisp8 ${SOURCES})
 
+set_target_properties (crisp8 PROPERTIES C_STANDARD 99)
+
 # Compilation options. Use -D<OPTION>=<ON|OFF> to toggle from the command line
 option(DISPLAY_USE_ALPHA "Use the integer value of the framebuffer as alpha" ON)
 

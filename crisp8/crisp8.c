@@ -162,6 +162,8 @@ void crisp8Init (chip8* emulator)
         abort ();
     }
 
+    memset (*emulator, 0, sizeof (**emulator));
+
     crisp8StackInit (&(*emulator)->stack);
 
     loadFont (*emulator);

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MEMORY_SIZE 4096
 
@@ -33,10 +34,17 @@ struct chip8_s
 
     // Timers ------------------------
 
-    uint8_t delay_timer;
-    uint8_t sound_timer;
+    uint8_t delayTimer;
+    uint8_t soundTimer;
 
     // Non emulator information ------
+
+    // Timer remainder counters
+    float delayTimerRemainder;
+    float soundTimerRemainder;
+
+    // Sound timer state
+    bool soundPlaying;
 
     // Callbacks
     audioCallback audioCb;
@@ -69,7 +77,80 @@ static void loadFont (chip8 emulator)
         0xF0, 0x80, 0xF0, 0x80, 0x80  	// F
     };
 
-    memcpy (emulator->memory + FONT_START_ADDRESS, font, sizeof (font));
+    memcpy (emulator->memory + CRISP8_FONT_START_ADDRESS, font, sizeof (font));
+}
+
+static void decrementDelayTimer (chip8 emulator)
+{
+    if (emulator->delayTimer == 0)
+    {
+        return;
+    }
+
+    emulator->delayTimerRemainder += (60.0f / emulator->framerate);
+
+    if (emulator->delayTimerRemainder > 1)
+    {
+        if (emulator->delayTimer < (uint8_t)emulator->delayTimerRemainder)
+        {
+            emulator->delayTimer = 0;
+        }
+        else
+        {
+            emulator->delayTimer -= (uint8_t)emulator->delayTimerRemainder;
+        }
+
+        emulator->delayTimerRemainder -= (uint8_t)emulator->delayTimerRemainder;
+    }
+}
+
+static void decrementSoundTimer (chip8 emulator)
+{
+    if (emulator->soundTimer == 0)
+    {
+        return;
+    }
+
+    emulator->soundTimerRemainder += (60.0f / emulator->framerate);
+
+    if (emulator->soundTimerRemainder > 1)
+    {
+        if (emulator->soundTimer < (uint8_t)emulator->soundTimerRemainder)
+        {
+            emulator->soundTimer = 0;
+        }
+        else
+        {
+            emulator->soundTimer -= (uint8_t)emulator->soundTimerRemainder;
+        }
+
+        emulator->soundTimerRemainder -= (uint8_t)emulator->soundTimerRemainder;
+    }
+}
+
+static void decrementTimers (chip8 emulator)
+{
+    decrementDelayTimer (emulator);
+    decrementSoundTimer (emulator);
+}
+
+static void playSound (chip8 emulator)
+{
+    if (emulator->soundTimer > 0)
+    {
+        if (emulator->soundPlaying == true)
+        {
+            return;
+        }
+
+        emulator->audioCb ();
+        emulator->soundPlaying = true;
+    }
+    else if (emulator->soundPlaying == true)
+    {
+        emulator->audioCb ();
+        emulator->soundPlaying = false;
+    }
 }
 
 void crisp8Init (chip8* emulator)

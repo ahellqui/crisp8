@@ -1,5 +1,6 @@
 #include "crisp8_private.h"
 #include "crisp8.h"
+#include "instructions.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -88,20 +89,6 @@ static void decrementTimers (chip8 emulator)
     decrementSoundTimer (emulator);
 }
 
-static uint16_t fetchInstruction (chip8 emulator)
-{
-    uint16_t instruction = 0;
-    // I'm not quite sure how endiannes work with bitwise operators, but hopefully this still works on non little endian
-    // machines.
-    instruction = (uint16_t)emulator->memory [emulator->PC] << 8;
-    instruction |= (uint16_t)emulator->memory [emulator->PC + 1];
-
-    // Increment PC for the next instruction
-    emulator->PC += 2;
-
-    return instruction;
-}
-
 static void playSound (chip8 emulator)
 {
     if (emulator->soundTimer > 0)
@@ -164,6 +151,19 @@ void crisp8InitializeProgram (chip8 emulator, uint8_t* program, uint16_t program
     memcpy (emulator->memory + CRISP8_PROGRAM_START_ADDRESS, program, program_size);
     emulator->PC = CRISP8_PROGRAM_START_ADDRESS;
 }
+
+void crisp8RunCycle (chip8 emulator)
+{
+    // Timer business
+    decrementTimers (emulator);
+    playSound (emulator);
+
+    // Decrement the display alpha values if compiled with those
+
+    // Fetch
+    uint16_t instruction = fetchInstruction (emulator);
+    // Decode and execute
+    dispatchInstruction (instruction, emulator);
 }
 
 const uint8_t* const crisp8GetFramebuffer (chip8 emulator)

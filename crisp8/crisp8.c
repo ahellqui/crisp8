@@ -136,6 +136,20 @@ static void decrementTimers (chip8 emulator)
     decrementSoundTimer (emulator);
 }
 
+static uint16_t fetchInstruction (chip8 emulator)
+{
+    uint16_t instruction = 0;
+    // I'm not quite sure how endiannes work with bitwise operators, but hopefully this still works on non little endian
+    // machines.
+    instruction = (uint16_t)emulator->memory [emulator->PC] << 8;
+    instruction |= (uint16_t)emulator->memory [emulator->PC + 1];
+
+    // Increment PC for the next instruction
+    emulator->PC += 2;
+
+    return instruction;
+}
+
 static void playSound (chip8 emulator)
 {
     if (emulator->soundTimer > 0)

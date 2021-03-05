@@ -39,7 +39,7 @@ struct chip8_s
 
     // Non emulator information ------
 
-    // Timer remainder counters
+    // Timer remainder counters (used to make sure they decrement at 60hz)
     float delayTimerRemainder;
     float soundTimerRemainder;
 
@@ -80,6 +80,7 @@ static void loadFont (chip8 emulator)
     memcpy (emulator->memory + CRISP8_FONT_START_ADDRESS, font, sizeof (font));
 }
 
+// Decrements the delay timer by the appropriate amount if it is greater than 0
 static void decrementDelayTimer (chip8 emulator)
 {
     if (emulator->delayTimer == 0)
@@ -104,6 +105,7 @@ static void decrementDelayTimer (chip8 emulator)
     }
 }
 
+// Decrements the sound timer by the appropriate amount if it is greater than 0
 static void decrementSoundTimer (chip8 emulator)
 {
     if (emulator->soundTimer == 0)

@@ -1,3 +1,4 @@
+// This is the public API part of crisp8. Use this in your frontend (assuming you want to write a debugger)
 #ifndef CRISP_8_STACK_H
 #define CRISP_8_STACK_H
 

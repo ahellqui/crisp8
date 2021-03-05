@@ -1,3 +1,4 @@
+// This is the public API part of crisp8. Use this in your frontend
 #ifndef CRISP8_H
 #define CRISP8_H
 
@@ -70,7 +71,7 @@ void crisp8RunCycle (chip8 emulator);
 // means off and 1 means on.
 //
 // Parameters:
-//  emulator: the used chip-8 emulator
+//  - emulator: the used chip-8 emulator
 //
 // Return value:
 //  A pointer to the emulators framebuffer

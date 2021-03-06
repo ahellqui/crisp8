@@ -43,4 +43,4 @@ make install
   A: All references to the program are written as crisp8 (such as function name prefixes). References to the chip-8 machine are written as chip8 (such as the chip8 type). Yes this was a bad idea, and yes I have probably mixed them up in the code causing lots of confusion. You live and you learn.
 
 ## License
-*To be decided*
+GPL3

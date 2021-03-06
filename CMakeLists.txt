@@ -5,12 +5,15 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 project (crisp8 LANGUAGES C)
 
 file (GLOB SOURCES crisp8/*.c crisp8/*.h)
+file (GLOB PUBLIC_HEADERS include/public/stack.h include/public/crisp8.h include/public/defs.h)
 
 add_library (crisp8 ${SOURCES})
+target_include_directories (crisp8 PUBLIC include/public)
+target_include_directories (crisp8 PRIVATE include/private)
 
 # Defines which part of the library are needed by the user
 install (TARGETS crisp8 DESTINATION lib)
-install (FILES crisp8/stack.h crisp8/crisp8.h crisp8/defs.h DESTINATION include/crisp8)
+install (FILES ${PUBLIC_HEADERS} DESTINATION include/crisp8)
 
 # Sets the c standard
 set_target_properties (crisp8 PROPERTIES C_STANDARD 99)

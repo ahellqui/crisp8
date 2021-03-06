@@ -89,6 +89,20 @@ static void decrementTimers (chip8 emulator)
     decrementSoundTimer (emulator);
 }
 
+#ifdef CRISP8_DISPLAY_USE_ALPHA
+static void decrementDisplayAlpha (chip8 emulator)
+{
+    for (int i = 0; i < CRISP8_DISPLAY_WIDTH * CRISP8_DISPLAY_HEIGHT; i++)
+    {
+        // A pixel is deemed of if is not at full brightness. This just slowly decrements it.
+        if (emulator->display [i] < 0xFF)
+        {
+            emulator->display [i] -= 1;
+        }
+    }
+}
+#endif
+
 static void playSound (chip8 emulator)
 {
     if (emulator->soundTimer > 0)
@@ -159,6 +173,9 @@ void crisp8RunCycle (chip8 emulator)
     playSound (emulator);
 
     // Decrement the display alpha values if compiled with those
+#ifdef CRISP8_DISPLAY_USE_ALPHA
+    decrementDisplayAlpha (emulator);
+#endif
 
     // Fetch
     uint16_t instruction = fetchInstruction (emulator);

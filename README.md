@@ -40,7 +40,7 @@ make install
   A: Because I had just finished a book by an english author when I decided on the name.
 
 - Q: Why do you mix crisp8 and chip8 in the source code?
-  A: All references to the program are written as crisp8 (such as function name prefixes). References to the chip-8 machine are written as chip8 (such as the chip8 type).
+  A: All references to the program are written as crisp8 (such as function name prefixes). References to the chip-8 machine are written as chip8 (such as the chip8 type). Yes this was a bad idea, and yes I have probably mixed them up in the code causing lots of confusion. You live and you learn.
 
 ## License
 *To be decided*

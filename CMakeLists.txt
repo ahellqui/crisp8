@@ -10,7 +10,7 @@ add_library (crisp8 ${SOURCES})
 
 # Defines which part of the library are needed by the user
 install (TARGETS crisp8 DESTINATION lib)
-install (FILES crisp8/stack.h crisp8/crisp8.h crisp8/defs.h DESTINATION include)
+install (FILES crisp8/stack.h crisp8/crisp8.h crisp8/defs.h DESTINATION include/crisp8)
 
 # Sets the c standard
 set_target_properties (crisp8 PROPERTIES C_STANDARD 99)

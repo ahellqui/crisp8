@@ -29,6 +29,10 @@ cmake .. [-D<OPTION>=<ON|OFF>]
 ```sh
 make
 ```
+4. Optionally execute make install to install the library and headers to wherever you defined CMAKE\_PREFIX\_DIR to be
+```sh
+make install
+```
 4. Profit?
 
 ## NAQ (Never Asked Questions)

@@ -8,6 +8,11 @@ file (GLOB SOURCES crisp8/*.c crisp8/*.h)
 
 add_library (crisp8 ${SOURCES})
 
+# Defines which part of the library are needed by the user
+install (TARGETS crisp8 DESTINATION lib)
+install (FILES crisp8/stack.h crisp8/crisp8.h crisp8/defs.h DESTINATION include)
+
+# Sets the c standard
 set_target_properties (crisp8 PROPERTIES C_STANDARD 99)
 
 # Compilation options. Use -D<OPTION>=<ON|OFF> to toggle from the command line

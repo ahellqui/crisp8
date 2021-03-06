@@ -1,3 +1,4 @@
 build
+install
 .cache
 compile_commands.json

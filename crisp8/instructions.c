@@ -93,27 +93,27 @@ static void opDraw (uint16_t instruction, chip8 emulator)
 #ifdef CRISP8_DISPLAY_USE_ALPHA
             if (NTH_BIT (sprite, 0))
             {
-                if (emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i] == 0xFF)
+                if (emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] == 0xFF)
                 {
-                    emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i] -= 1;
+                    emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] -= 1;
                     emulator->V [0xF] = 1;
                 }
                 else
                 {
-                    emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i] = 0xFF;
+                    emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] = 0xFF;
                 }
             }
 #else
             if (NTH_BIT (sprite, 0))
             {
-                if (emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i])
+                if (emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i])
                 {
-                    emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i] = 0;
+                    emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] = 0;
                     emulator->V [0xF] = 1;
                 }
                 else
                 {
-                    emulator->display [(j * CRISP8_DISPLAY_HEIGHT) + i] = 1;
+                    emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] = 1;
                 }
             }
 #endif

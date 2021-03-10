@@ -91,7 +91,7 @@ static void opDraw (uint16_t instruction, chip8 emulator)
         for (int i = xCoord; i < xCoord + 8 && i < CRISP8_DISPLAY_WIDTH; i++)
         {
 #ifdef CRISP8_DISPLAY_USE_ALPHA
-            if (NTH_BIT (sprite, 0))
+            if (NTH_BIT (sprite, 7))
             {
                 if (emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i] == 0xFF)
                 {
@@ -117,7 +117,7 @@ static void opDraw (uint16_t instruction, chip8 emulator)
                 }
             }
 #endif
-            sprite = sprite >> 1;
+            sprite = sprite << 1;
         }
 
         spriteAddress += 1;

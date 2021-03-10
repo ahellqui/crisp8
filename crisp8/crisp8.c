@@ -95,7 +95,7 @@ static void decrementDisplayAlpha (chip8 emulator)
     for (int i = 0; i < CRISP8_DISPLAY_WIDTH * CRISP8_DISPLAY_HEIGHT; i++)
     {
         // A pixel is deemed of if is not at full brightness. This just slowly decrements it.
-        if (emulator->display [i] < 0xFF)
+        if (emulator->display [i] < 0xFF && emulator->display [i] > 0)
         {
             emulator->display [i] -= 1;
         }

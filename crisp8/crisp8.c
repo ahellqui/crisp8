@@ -187,3 +187,13 @@ const uint8_t* const crisp8GetFramebuffer (chip8 emulator)
 {
     return emulator->display;
 }
+
+void crisp8InitDebugStruct (struct crisp8Debug* debugStruct, chip8 emulator)
+{
+    debugStruct->memory = emulator->memory;
+    debugStruct->stack = emulator->stack;
+
+    debugStruct->PC = &emulator->PC;
+    debugStruct->I = &emulator->I;
+    debugStruct->V = emulator->V;
+}

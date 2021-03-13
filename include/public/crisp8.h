@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include "stack.h"
+
 typedef struct chip8_s* chip8;
 
 // Initialization and deinitialization ---------------------------------
@@ -78,5 +80,30 @@ void crisp8RunCycle (chip8 emulator);
 const uint8_t* const crisp8GetFramebuffer (chip8 emulator);
 
 // Debugging -----------------------------------------------------------
-// TODO Add debugging material for access to memory, registers and the stack
+
+// A struct containing pointers to the chip-8 emulators memory, stack and registers.
+// The members are direct pointers to the chip8's members, so they will update every cycle.
+// You may read or write any of it's members (except for the stack) directly, but be careful to not cause segmentation
+// faults.
+//
+// The stack has to be interacted with through the API defined in stack.h
+struct crisp8Debug
+{
+    uint8_t* memory;
+    chip8Stack stack;
+
+    uint16_t* PC;
+    uint16_t* I;
+
+    //Use V [0xN] to access register N
+    uint8_t* V;
+};
+
+// Initializes a crisp8Debug struct with the addresses of emulator's members.
+// This only needs to be called once since the members will update every chip-8 cycle.
+//
+// Parameters:
+//  - debugStruct: The crisp8Debug struct to initialize
+//  - emulator: The chip8 which members will be used to initialize debugStruct
+void crisp8InitDebugStruct (struct crisp8Debug* debugStruct, chip8 emulator);
 #endif

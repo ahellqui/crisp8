@@ -2,7 +2,7 @@
 // useful for you if you want to create a debugger, as the whole point of crisp8 is that you don't have to be concerned
 // with this stuff
 
-#include "../crisp8/stack.h"
+#include "../include/public/stack.h"
 
 #include <stdio.h>
 

@@ -4,6 +4,7 @@
 #include "stack.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 // Macros to extract values out of instructions
 
@@ -273,6 +274,15 @@ static void opJumpWithOffset (uint16_t instruction, chip8 emulator)
     }
 
     emulator->PC = baseAddress + offset;
+}
+
+// CXNN
+// Random
+static void opRandom (uint16_t instruction, chip8 emulator)
+{
+    // I don't think a library should call srand, so it has to be clear to the user that it is their responsibility
+    uint8_t randomNum = rand () & INSTRUCTION_GET_NN (instruction);
+    emulator->V [INSTRUCTION_GET_X (instruction)] = randomNum;
 }
 
 // Draws to the screen

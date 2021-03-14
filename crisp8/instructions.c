@@ -221,7 +221,7 @@ static void opShiftRight (uint16_t instruction, chip8 emulator)
 {
     // The original chip-8 put the value in VY in VX before shifting, but this was later removed.
     // You can choose which behaviour to compile in
-    if (crisp8ConfigGetShiftNew (emulator))
+    if (crisp8ConfigGetShift (emulator) == OLD)
     {
         emulator->V [INSTRUCTION_GET_X (instruction)] = emulator->V [INSTRUCTION_GET_Y (instruction)];
     }
@@ -237,7 +237,7 @@ static void opShiftLeft (uint16_t instruction, chip8 emulator)
 {
     // The original chip-8 put the value in VY in VX before shifting, but this was later removed.
     // You can choose which behaviour to compile in
-    if (crisp8ConfigGetShiftNew (emulator))
+    if (crisp8ConfigGetShift (emulator) == OLD)
     {
         emulator->V [INSTRUCTION_GET_X (instruction)] = emulator->V [INSTRUCTION_GET_Y (instruction)];
     }

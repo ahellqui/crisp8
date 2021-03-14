@@ -124,7 +124,7 @@ static void playSound (chip8 emulator)
 
 static void loadDefaultConfig (chip8 emulator)
 {
-    crisp8ConfigSetShiftNew (true, emulator);
+    crisp8ConfigSetShift (NEW, emulator);
 }
 
 void crisp8Init (chip8* emulator)

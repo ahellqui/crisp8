@@ -1,12 +1,13 @@
 #include "config.h"
 #include "crisp8_private.h"
 
-void crisp8ConfigSetShiftNew (bool value, chip8 emulator)
+void crisp8ConfigSetShift (enum crisp8ConfigValue value, chip8 emulator)
 {
-    emulator->config.useInstructionShiftNew = value;
+    emulator->config.instructionShift = value;
 }
 
-bool crisp8ConfigGetShiftNew (chip8 emulator)
+enum crisp8ConfigValue crisp8ConfigGetShift (chip8 emulator)
 {
-    return emulator->config.useInstructionShiftNew;
+    return emulator->config.instructionShift;
+}
 }

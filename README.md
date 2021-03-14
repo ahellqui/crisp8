@@ -6,7 +6,7 @@ Crisp-8 is a backend of a chip-8 emulator. It handles all the chip-8 instruction
 - Read the program file from disk (the backend only interprets it)
 
 ## Usage/API
-Look at crisp8/crisp8.h
+Look at the files in include/public. Also, you have to call `srand` somewhere in your program for the chip-8's random instruction.
 
 ## Examples
 Examples of how to use parts of the API can be found in the examples directory.

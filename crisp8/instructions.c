@@ -284,6 +284,36 @@ static void opRandom (uint16_t instruction, chip8 emulator)
     emulator->V [INSTRUCTION_GET_X (instruction)] = randomNum;
 }
 
+// EX9E
+// Skip if key is pressed
+static void opSkipIfKey (uint16_t instruction, chip8 emulator)
+{
+    uint32_t keyMap = emulator->inputCb ();
+    uint8_t key = emulator->V [INSTRUCTION_GET_X (instruction)];
+
+    // The keymap in defs.h is set up such that the value in VX will be the bit corresponding to its key.
+    // Key values from 0x0 to 0xF are allowed; A value outside of this is counted as not pressed
+    if (keyMap & (1 << key) && key <= 0xF)
+    {
+        emulator->PC += 2;
+    }
+}
+
+// EXA1
+// Skip if key is not pressed
+static void opSkipIfNotKey (uint16_t instruction, chip8 emulator)
+{
+    uint32_t keyMap = emulator->inputCb ();
+    uint8_t key = emulator->V [INSTRUCTION_GET_X (instruction)];
+
+    // The keymap in defs.h is set up such that the value in VX will be the bit corresponding to its key
+    // Key values from 0x0 to 0xF are allowed; A value outside of this is counted as not pressed
+    if ((!(keyMap & (1 << key))) || key > 0xF)
+    {
+        emulator->PC += 2;
+    }
+}
+
 // Draws to the screen
 static void opDraw (uint16_t instruction, chip8 emulator)
 {
@@ -387,6 +417,19 @@ static void decodeType8 (uint16_t instruction, chip8 emulator)
     }
 }
 
+static void decodeTypeE (uint16_t instruction, chip8 emulator)
+{
+    switch (INSTRUCTION_GET_NIBBLE (instruction, 3))
+    {
+        case 1:
+            opSkipIfNotKey (instruction, emulator);
+            break;
+        case 0xE:
+            opSkipIfKey (instruction, emulator);
+            break;
+    }
+}
+
 void dispatchInstruction (uint16_t instruction, chip8 emulator)
 {
     // Instructions on the chip8 are divided into types by the first nibble. If an instruction is alone in its type, it
@@ -436,6 +479,7 @@ void dispatchInstruction (uint16_t instruction, chip8 emulator)
             opDraw (instruction, emulator);
             break;
         case 0xE:
+            decodeTypeE (instruction, emulator);
             break;
         case 0xF:
             break;

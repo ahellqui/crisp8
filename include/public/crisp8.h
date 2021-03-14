@@ -41,13 +41,14 @@ void crisp8SetAudioCallback (chip8 emulator, void (*callback) (void));
 // Because input support will vary between platforms, all frontends have to supply a callback that returns the state of
 // the keypad.
 //
-// The callback should return a 16 bit bitmask containing the state of all 16 keys on the keypad. The keys are
-// represented in the following order from least to most significant bit: 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, A, B, C, D, E, F.
+// The callback should return a 32 bit bitmask containing the state of all 16 keys on the keypad. The keys are
+// represented in the following order from least to most significant bit: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F.
+// Macros to help with this are provided in defs.h
 //
 // Parameters:
 //  - emulator: the used chip-8 emulator
 //  - callback: a function pointer to the callback function
-void crisp8SetInputCallback (chip8 emulator, uint16_t (*callback) (void));
+void crisp8SetInputCallback (chip8 emulator, uint32_t (*callback) (void));
 
 // The chip-8 program resides completely in memory. The frontend is respnsible for doing the file io to read in the
 // program, which is then passed into the backend in the form of an array.

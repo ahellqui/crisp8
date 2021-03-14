@@ -18,7 +18,7 @@
 #include "config.h"
 
 typedef void (*crisp8AudioCallback) (void);
-typedef uint16_t (*crisp8InputCallback) (void);
+typedef uint32_t (*crisp8InputCallback) (void);
 
 struct chip8_s
 {

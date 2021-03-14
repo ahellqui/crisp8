@@ -5,7 +5,10 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 project (crisp8 LANGUAGES C)
 
 file (GLOB SOURCES crisp8/*.c crisp8/*.h)
-file (GLOB PUBLIC_HEADERS include/public/stack.h include/public/crisp8.h include/public/defs.h)
+file (GLOB PUBLIC_HEADERS include/public/stack.h
+                          include/public/crisp8.h
+                          include/public/defs.h
+                          include/public/config.h)
 
 add_library (crisp8 ${SOURCES})
 target_include_directories (crisp8 PUBLIC include/public)

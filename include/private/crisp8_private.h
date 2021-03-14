@@ -15,6 +15,7 @@
 
 #include "defs.h"
 #include "stack.h"
+#include "config.h"
 
 typedef void (*crisp8AudioCallback) (void);
 typedef uint16_t (*crisp8InputCallback) (void);
@@ -56,5 +57,8 @@ struct chip8_s
 
     // Framerate
     uint16_t framerate;
+
+    // Configuration for some ambiguous instructions
+    struct crisp8Config config;
 };
 #endif

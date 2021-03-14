@@ -216,6 +216,39 @@ static void opSubVX (uint16_t instruction, chip8 emulator)
     emulator->V [INSTRUCTION_GET_X (instruction)] = minuend - subtrehend;
 }
 
+// 8XY6
+static void opShiftRight (uint16_t instruction, chip8 emulator)
+{
+    // The original chip-8 put the value in VY in VX before shifting, but this was later removed.
+    // You can choose which behaviour to compile in
+    if (crisp8ConfigGetShiftNew (emulator))
+    {
+        emulator->V [INSTRUCTION_GET_X (instruction)] = emulator->V [INSTRUCTION_GET_Y (instruction)];
+    }
+
+    uint8_t valueVX = emulator->V [INSTRUCTION_GET_X (instruction)];
+
+    emulator->V [0xF] = NTH_BIT (valueVX, 7);
+    emulator->V [INSTRUCTION_GET_X (instruction)] = valueVX >> 1;
+}
+
+// 8XYE
+static void opShiftLeft (uint16_t instruction, chip8 emulator)
+{
+    // The original chip-8 put the value in VY in VX before shifting, but this was later removed.
+    // You can choose which behaviour to compile in
+    if (crisp8ConfigGetShiftNew (emulator))
+    {
+        emulator->V [INSTRUCTION_GET_X (instruction)] = emulator->V [INSTRUCTION_GET_Y (instruction)];
+    }
+
+    uint8_t valueVX = emulator->V [INSTRUCTION_GET_X (instruction)];
+
+    emulator->V [0xF] = NTH_BIT (valueVX, 0);
+    emulator->V [INSTRUCTION_GET_X (instruction)] = valueVX << 1;
+}
+
+
 // Sets the index register to an immediate value
 static void opSetIndex (uint16_t instruction, chip8 emulator)
 {
@@ -313,9 +346,14 @@ static void decodeType8 (uint16_t instruction, chip8 emulator)
         case 5:
             opSubVY (instruction, emulator);
             break;
+        case 6:
+            opShiftRight (instruction, emulator);
+            break;
         case 7:
             opSubVX (instruction, emulator);
             break;
+        case 0xE:
+            opShiftLeft (instruction, emulator);
             break;
     }
 }

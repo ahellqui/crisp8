@@ -122,6 +122,11 @@ static void playSound (chip8 emulator)
     }
 }
 
+static void loadDefaultConfig (chip8 emulator)
+{
+    crisp8ConfigSetShiftNew (true, emulator);
+}
+
 void crisp8Init (chip8* emulator)
 {
     *emulator = malloc (sizeof (**emulator));
@@ -136,6 +141,8 @@ void crisp8Init (chip8* emulator)
     crisp8StackInit (&(*emulator)->stack);
 
     loadFont (*emulator);
+
+    loadDefaultConfig (*emulator);
 }
 
 void crisp8Destroy (chip8* emulator)

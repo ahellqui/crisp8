@@ -249,10 +249,30 @@ static void opShiftLeft (uint16_t instruction, chip8 emulator)
 }
 
 
+// ANNN
 // Sets the index register to an immediate value
 static void opSetIndex (uint16_t instruction, chip8 emulator)
 {
     emulator->I = INSTRUCTION_GET_NNN (instruction);
+}
+
+// BNNN/BXNN (depending on config)
+// Jump with offset
+static void opJumpWithOffset (uint16_t instruction, chip8 emulator)
+{
+    uint16_t baseAddress = INSTRUCTION_GET_NNN (instruction);
+    uint8_t offset;
+
+    if (crisp8ConfigGetJumpOffset (emulator) == OLD)
+    {
+        offset = emulator->V [0];
+    }
+    else
+    {
+        offset = emulator->V [INSTRUCTION_GET_X (instruction)];
+    }
+
+    emulator->PC = baseAddress + offset;
 }
 
 // Draws to the screen
@@ -398,6 +418,7 @@ void dispatchInstruction (uint16_t instruction, chip8 emulator)
             opSetIndex (instruction, emulator);
             break;
         case 0xB:
+            opJumpWithOffset (instruction, emulator);
             break;
         case 0xC:
             break;

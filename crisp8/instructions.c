@@ -430,7 +430,7 @@ static void opFontCharacter (uint16_t instruction, chip8 emulator)
 {
     // The character to use is in the last nibble of VX.
     // The instruction macros won't work here since they are for 32 bit integers
-    uint8_t character = INSTRUCTION_GET_X (instruction) & 0x0F;
+    uint8_t character = emulator->V [INSTRUCTION_GET_X (instruction)] & 0x0F;
 
     // The font is at the font base address + (character * 5) since every font sprite is 5 pixels tall and therefore
     // occupy 5 bytes

@@ -346,7 +346,7 @@ static void opDraw (uint16_t instruction, chip8 emulator)
                 }
             }
 #else
-            if (NTH_BIT (sprite, 0))
+            if (NTH_BIT (sprite, 7))
             {
                 if (emulator->display [(j * CRISP8_DISPLAY_WIDTH) + i])
                 {

@@ -126,6 +126,7 @@ static void loadDefaultConfig (chip8 emulator)
 {
     crisp8ConfigSetShift (NEW, emulator);
     crisp8ConfigSetJumpOffset (OLD, emulator);
+    crisp8ConfigSetStoreLoadMemory (NEW, emulator);
 }
 
 void crisp8Init (chip8* emulator)

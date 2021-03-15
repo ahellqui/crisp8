@@ -366,6 +366,129 @@ static void opDraw (uint16_t instruction, chip8 emulator)
     }
 }
 
+// FX07
+// Sets VX to the delay timer
+static void opSetVXDelay (uint16_t instruction, chip8 emulator)
+{
+    emulator->V [INSTRUCTION_GET_X (instruction)] = emulator->delayTimer;
+}
+
+// FX15
+// Sets the delay timer to VX
+static void opSetDelayTimer (uint16_t instruction, chip8 emulator)
+{
+    emulator->delayTimer = emulator->V [INSTRUCTION_GET_X (instruction)];
+}
+
+// FX18
+// Sets the delay timer to VX
+static void opSetSoundTimer (uint16_t instruction, chip8 emulator)
+{
+    emulator->soundTimer = emulator->V [INSTRUCTION_GET_X (instruction)];
+}
+
+// FX1E
+// Add to index
+static void opAddToIndex (uint16_t instruction, chip8 emulator)
+{
+    emulator->I += emulator->V [INSTRUCTION_GET_X (instruction)];
+
+    if (emulator->I > 0x1000)
+    {
+        emulator->V [0xF] = 1;
+    }
+}
+
+// FX0A
+// Get key (blocking)
+static void opGetKey (uint16_t instruction, chip8 emulator)
+{
+    // A key is registered on release, so we have to do some funky stuff
+    uint32_t keyMapOld = emulator->inputCb ();
+    uint32_t keyMapNew = emulator->inputCb ();
+
+    if (!keyMapOld || keyMapNew == keyMapOld)
+    {
+        emulator->PC -= 2;
+    }
+    else
+    {
+        for (int i = 0; i <= 0xF; i++)
+        {
+            if (NTH_BIT (keyMapOld, i) && !NTH_BIT (keyMapNew, i))
+            {
+                emulator->V [INSTRUCTION_GET_X (instruction)] = i;
+                break;
+            }
+        }
+    }
+}
+
+// FX29
+// Font character
+static void opFontCharacter (uint16_t instruction, chip8 emulator)
+{
+    // The character to use is in the last nibble of VX.
+    // The instruction macros won't work here since they are for 32 bit integers
+    uint8_t character = INSTRUCTION_GET_X (instruction) & 0x0F;
+
+    // The font is at the font base address + (character * 5) since every font sprite is 5 pixels tall and therefore
+    // occupy 5 bytes
+    uint16_t fontAddress = CRISP8_FONT_START_ADDRESS + (character * 5);
+
+    emulator->I = fontAddress;
+}
+
+// FX33
+// Decimal conversion
+static void opDecimalConvert (uint16_t instruction, chip8 emulator)
+{
+    uint8_t number = emulator->V [INSTRUCTION_GET_X (instruction)];
+    for (int i = 2; i >= 0; i--)
+    {
+        emulator->memory [emulator->I + i] = number % 10;
+        number /= 10;
+    }
+}
+
+// FX55
+// Store registers to memory
+static void opStoreMemory (uint16_t instruction, chip8 emulator)
+{
+    uint8_t numRegisters = INSTRUCTION_GET_X (instruction);
+
+    for (int i = 0; i <= numRegisters; i++)
+    {
+        emulator->memory [emulator->I + i] = emulator->V [i];
+    }
+
+    // In the old behaviour, the I register was incremented as it worked.
+    // We can simulate this in O(1) by just calculating the new address
+    if (crisp8ConfigGetStoreLoadMemory (emulator) == OLD)
+    {
+        emulator->I += numRegisters + 1;
+    }
+}
+
+// FX65
+// Load registers from memory
+static void opLoadMemory (uint16_t instruction, chip8 emulator)
+{
+    uint8_t numRegisters = INSTRUCTION_GET_X (instruction);
+
+    for (int i = 0; i <= numRegisters; i++)
+    {
+        emulator->V [i] = emulator->memory [emulator->I + i];
+    }
+
+    // In the old behaviour, the I register was incremented as it worked.
+    // We can simulate afterwards by just calculating the new address
+    if (crisp8ConfigGetStoreLoadMemory (emulator) == OLD)
+    {
+        emulator->I += numRegisters + 1;
+    }
+}
+
 // Instruction decoding ------------------------------------------------
 
 static void decodeType0 (uint16_t instruction, chip8 emulator)
@@ -430,6 +553,41 @@ static void decodeTypeE (uint16_t instruction, chip8 emulator)
     }
 }
 
+static void decodeTypeF (uint16_t instruction, chip8 emulator)
+{
+    // This group of instructions are differentiated by the two last nibbles
+    switch (INSTRUCTION_GET_NN (instruction))
+    {
+        case 0x07:
+            opSetVXDelay (instruction, emulator);
+            break;
+        case 0x15:
+            opSetDelayTimer (instruction, emulator);
+            break;
+        case 0x18:
+            opSetSoundTimer (instruction, emulator);
+            break;
+        case 0x1E:
+            opAddToIndex (instruction, emulator);
+            break;
+        case 0x0A:
+            opGetKey (instruction, emulator);
+            break;
+        case 0x29:
+            opFontCharacter (instruction, emulator);
+            break;
+        case 0x33:
+            opDecimalConvert (instruction, emulator);
+            break;
+        case 0x55:
+            opStoreMemory (instruction, emulator);
+            break;
+        case 0x65:
+            opLoadMemory (instruction, emulator);
+            break;
+    }
+}
+
 void dispatchInstruction (uint16_t instruction, chip8 emulator)
 {
     // Instructions on the chip8 are divided into types by the first nibble. If an instruction is alone in its type, it
@@ -482,6 +640,7 @@ void dispatchInstruction (uint16_t instruction, chip8 emulator)
             decodeTypeE (instruction, emulator);
             break;
         case 0xF:
+            decodeTypeF (instruction, emulator);
             break;
     }
 }

@@ -17,26 +17,39 @@ struct crisp8Config
 
     // This instructions behaviour is complicated. Look up instruction BNNN if you want to know.
     enum crisp8ConfigValue instructionJumpOffset;
+
+    // In the old behaviour, the I register is incremented while it works. This is not the case in the new
+    enum crisp8ConfigValue instructionStoreLoadMemory;
 };
 
-// Use the new behaviour in shift instructions (put VY in VX before shifting)
+// Choose the behaviour to use in shift instructions
 //
 // Parameters:
 //  - value: the value to set the confguration option to (OLD or NEW)
 //  - emulator: the used chip-8 emulator
 void crisp8ConfigSetShift (enum crisp8ConfigValue value, chip8 emulator);
 
-// Get the value of the configuration option useInstructionShiftNew
+// Get the value of the configuration option instructionShift
 enum crisp8ConfigValue crisp8ConfigGetShift (chip8 emulator);
 
-// Use the new behaviour in the jump with offset instruction
+// Choose the behaviour to use in the jump with offset instruction
 //
 // Parameters:
-//  - value: the value to set the confguration option to (true or false)
+//  - value: the value to set the confguration option to (OLD or NEW)
 //  - emulator: the used chip-8 emulator
 void crisp8ConfigSetJumpOffset (enum crisp8ConfigValue value, chip8 emulator);
 
-// Get the value of the configuration option useInstructionJumpOffsetNew
+// Get the value of the configuration option instructionJumpOffset
 enum crisp8ConfigValue crisp8ConfigGetJumpOffset (chip8 emulator);
+
+// Choose the behaviour to use in the load and store memory instructions
+//
+// Parameters:
+//  - value: the value to set the confguration option to (OLD or NEW)
+//  - emulator: the used chip-8 emulator
+void crisp8ConfigSetStoreLoadMemory (enum crisp8ConfigValue value, chip8 emulator);
+
+// Get the value of the configuration option instructionStoreLoadMemory
+enum crisp8ConfigValue crisp8ConfigGetStoreLoadMemory (chip8 emulator);
 
 #endif

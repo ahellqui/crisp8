@@ -20,3 +20,13 @@ enum crisp8ConfigValue crisp8ConfigGetJumpOffset (chip8 emulator)
 {
     return emulator->config.instructionJumpOffset;
 }
+
+void crisp8ConfigSetStoreLoadMemory (enum crisp8ConfigValue value, chip8 emulator)
+{
+    emulator->config.instructionStoreLoadMemory = value;
+}
+
+enum crisp8ConfigValue crisp8ConfigGetStoreLoadMemory (chip8 emulator)
+{
+    return emulator->config.instructionStoreLoadMemory;
+}

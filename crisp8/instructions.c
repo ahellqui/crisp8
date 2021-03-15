@@ -229,7 +229,7 @@ static void opShiftRight (uint16_t instruction, chip8 emulator)
 
     uint8_t valueVX = emulator->V [INSTRUCTION_GET_X (instruction)];
 
-    emulator->V [0xF] = NTH_BIT (valueVX, 7);
+    emulator->V [0xF] = NTH_BIT (valueVX, 0);
     emulator->V [INSTRUCTION_GET_X (instruction)] = valueVX >> 1;
 }
 
@@ -245,7 +245,7 @@ static void opShiftLeft (uint16_t instruction, chip8 emulator)
 
     uint8_t valueVX = emulator->V [INSTRUCTION_GET_X (instruction)];
 
-    emulator->V [0xF] = NTH_BIT (valueVX, 0);
+    emulator->V [0xF] = NTH_BIT (valueVX, 7);
     emulator->V [INSTRUCTION_GET_X (instruction)] = valueVX << 1;
 }
 

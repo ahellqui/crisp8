@@ -1,4 +1,4 @@
-Crisp-8 is a backend of a chip-8 emulator. It handles all the chip-8 instructions while allowing different frontends to be written for drawing and playing sound. Crisp-8 takes an array of bytes as input and exposes functions to execute instructions or provide internal information of the emulated machine. It is up to the frontend to:
+Crisp8 is a backend of a chip-8 emulator. It handles all the chip-8 instructions while allowing different frontends to be written for drawing and playing sound. Crisp-8 takes an array of bytes as input and exposes functions to execute instructions or provide internal information of the emulated machine. It is up to the frontend to:
 
 - Print to the screen
 - Supply callbacks for input and audio
@@ -9,8 +9,7 @@ Crisp-8 is a backend of a chip-8 emulator. It handles all the chip-8 instruction
 Look at the files in include/public. Also, you have to call `srand` somewhere in your program for the chip-8's random instruction.
 
 ## Examples
-Examples of how to use parts of the API can be found in the examples directory.
-*Link to reference frontend implementation that unfortunately doesn't exist yet*
+Examples of some of parts of the API can be found in the examples directory. For a complete example of a frontend (though currently without the debugging interface) you may want to look at [crisp8-sdl](https://github.com/ahellqui/crisp8-sdl).
 
 ## Building
 Building crisp8 requires a c compiler and cmake.
@@ -35,6 +34,9 @@ make install
 ```
 4. Profit?
 
+### Steps for other operating systems
+You're on your own but please make a pull request if you figure it out.
+
 ## NAQ (Never Asked Questions)
 Q: Why is it called crisp-8?
 
@@ -43,6 +45,10 @@ A: Because I had just finished a book by an english author when I decided on the
 Q: Why do you mix crisp8 and chip8 in the source code?
 
 A: All references to the program are written as crisp8 (such as function name prefixes). References to the chip-8 machine are written as chip8 (such as the chip8 type). Yes this was a bad idea, and yes I have probably mixed them up in the code causing lots of confusion. You live and you learn.
+
+Q: Why does this section exist?
+
+A: I've always wanted to write an faq, but no one ever asks anything.
 
 ## License
 GPL3

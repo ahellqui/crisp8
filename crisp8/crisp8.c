@@ -8,6 +8,9 @@
 #include <stdbool.h>
 
 // Loads the font of the chip-8 into its memory
+//
+// Parameters:
+//  emulator: the emulator to load the font into
 static void loadFont (chip8 emulator)
 {
     // This is a commonly used font. I might design my own in the future
@@ -34,6 +37,9 @@ static void loadFont (chip8 emulator)
 }
 
 // Decrements the delay timer by the appropriate amount if it is greater than 0
+//
+// Parameters:
+//  emulator: the emulator of which the delay timer should be decremented
 static void decrementDelayTimer (chip8 emulator)
 {
     if (emulator->delayTimer == 0)
@@ -59,6 +65,9 @@ static void decrementDelayTimer (chip8 emulator)
 }
 
 // Decrements the sound timer by the appropriate amount if it is greater than 0
+//
+// Parameters:
+//  emulator: the emulator of which the sound timer should be decremented
 static void decrementSoundTimer (chip8 emulator)
 {
     if (emulator->soundTimer == 0)
@@ -83,12 +92,18 @@ static void decrementSoundTimer (chip8 emulator)
     }
 }
 
+// Wrapper function to decrement the emulator's timers
+//
+// Parameters:
+//  emulator: the emulator of which the timers should be decremented
 static void decrementTimers (chip8 emulator)
 {
     decrementDelayTimer (emulator);
     decrementSoundTimer (emulator);
 }
 
+// Decrement the alpha value of pixels in the framebuffer if they are turned off to give them an old monitor effect.
+// This is only called if crisp8 is compiled with CRISP8_DISPLAY_USE_ALPHA defined
 #ifdef CRISP8_DISPLAY_USE_ALPHA
 static void decrementDisplayAlpha (chip8 emulator)
 {
@@ -103,6 +118,10 @@ static void decrementDisplayAlpha (chip8 emulator)
 }
 #endif
 
+// Play a beep if the sound timer is greater than 0
+//
+// Parameters:
+//  emulator: the emulator that should play the sound
 static void playSound (chip8 emulator)
 {
     if (emulator->soundTimer > 0)
@@ -122,6 +141,11 @@ static void playSound (chip8 emulator)
     }
 }
 
+// Loads the default configuration of the ambiguous instructions of the chip-8. This configuration is deemed to fit the
+// most programs by default
+//
+// Parameters:
+//  emulator: the emulator to load the config into
 static void loadDefaultConfig (chip8 emulator)
 {
     crisp8ConfigSetShift (NEW, emulator);

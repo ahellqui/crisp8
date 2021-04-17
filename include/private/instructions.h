@@ -3,7 +3,7 @@
 
 #include "crisp8.h"
 
-// Fetches the instruction currently pointed to by PC and increments PC to point to the next
+// Fetches the instruction currently pointed to by PC and increments PC to point to the next instruction
 //
 // Parameters:
 //  - emulator: the used chip-8 emulator

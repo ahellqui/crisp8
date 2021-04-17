@@ -41,8 +41,12 @@ uint16_t fetchInstruction (chip8 emulator)
 }
 
 // Instructions (starts with op for opcode) ----------------------------
-// There are brief comments of what they do, but honestly just look up the opcodes on wikipedia or something if you want
-// details
+// There are brief comments of what some of them, but honestly just look up the opcodes on wikipedia or something if
+// you want details. There are way better references than anything I should write here
+//
+// All instructoin functions take one or two parameters. All of them take in "emulator" which is the emulator on which
+// to operate. Some of them take in "instruction" which is the current fetched instruction for the cases where it
+// contains additional information needed by the function.
 
 // 00E0
 // Clears the screen
@@ -314,6 +318,7 @@ static void opSkipIfNotKey (uint16_t instruction, chip8 emulator)
     }
 }
 
+// DXYN
 // Draws to the screen
 static void opDraw (uint16_t instruction, chip8 emulator)
 {
@@ -490,10 +495,11 @@ static void opLoadMemory (uint16_t instruction, chip8 emulator)
 }
 
 // Instruction decoding ------------------------------------------------
+// This group of functions decode instructions before executing them.
+// They all take the instruction to decode and the emulator to operate on as parameters.
 
 static void decodeType0 (uint16_t instruction, chip8 emulator)
 {
-    // I'm not including the 0NNN instruction, so no instructions have operands
     switch (instruction)
     {
         case 0x00E0:
@@ -542,6 +548,7 @@ static void decodeType8 (uint16_t instruction, chip8 emulator)
 
 static void decodeTypeE (uint16_t instruction, chip8 emulator)
 {
+    // The instructions in this group are differentiated by the last nibble
     switch (INSTRUCTION_GET_NIBBLE (instruction, 3))
     {
         case 1:

@@ -1,4 +1,4 @@
-// I kind of made this example to test some opcodes, but it demonstrates the debug interface as well
+// I kind of made this example to test some opcodes.. but it demonstrates the debug interface as well
 #include "../include/public/crisp8.h"
 
 #include <stdio.h>
@@ -11,8 +11,8 @@ int main ()
     struct crisp8Debug debugStruct;
     crisp8InitDebugStruct (&debugStruct, emulator);
 
-    // A completely useless program that changes a few registers just to show that you can read and write them with
-    // the crisp8Debug struct
+    // A completely useless program that changes a few registers and reads and writes from/to memory just to show that
+    // you can read and write to the crisp8's internals with the crisp8Debug struct
     uint8_t program [] = {0x10, 0x00,   // Jump to address 0
                           0xA2, 0x55,   // Set index register to 0x255
                           0x64, 0x0F,   // Set register V4 to 0x0F
@@ -36,7 +36,7 @@ int main ()
                           0x62, 0x00,   // Set register V1 to 0x14
                           0x63, 0x00,   // Set register V1 to 0x14
 
-                          // Store from memory
+                          // Load from memory
                           0xF3, 0x65,
 
                           // Load address of font character A to index register

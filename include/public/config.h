@@ -30,6 +30,12 @@ struct crisp8Config
 void crisp8ConfigSetShift (enum crisp8ConfigValue value, chip8 emulator);
 
 // Get the value of the configuration option instructionShift
+//
+// Parameters:
+//  - emulator: the used chip-8 emulator
+//
+// Return value:
+//  The value of the setting
 enum crisp8ConfigValue crisp8ConfigGetShift (chip8 emulator);
 
 // Choose the behaviour to use in the jump with offset instruction
@@ -40,6 +46,12 @@ enum crisp8ConfigValue crisp8ConfigGetShift (chip8 emulator);
 void crisp8ConfigSetJumpOffset (enum crisp8ConfigValue value, chip8 emulator);
 
 // Get the value of the configuration option instructionJumpOffset
+//
+// Parameters:
+//  - emulator: the used chip-8 emulator
+//
+// Return value:
+//  The value of the setting
 enum crisp8ConfigValue crisp8ConfigGetJumpOffset (chip8 emulator);
 
 // Choose the behaviour to use in the load and store memory instructions
@@ -50,6 +62,12 @@ enum crisp8ConfigValue crisp8ConfigGetJumpOffset (chip8 emulator);
 void crisp8ConfigSetStoreLoadMemory (enum crisp8ConfigValue value, chip8 emulator);
 
 // Get the value of the configuration option instructionStoreLoadMemory
+//
+// Parameters:
+//  - emulator: the used chip-8 emulator
+//
+// Return value:
+//  The value of the setting
 enum crisp8ConfigValue crisp8ConfigGetStoreLoadMemory (chip8 emulator);
 
 #endif

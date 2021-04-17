@@ -2,11 +2,14 @@
 #ifndef CRISP8_DEFINES_H
 #define CRISP8_DEFINES_H
 
+// The RAM size of the chip-8 in bytes
 #define CRISP8_MEMORY_SIZE 4096
 
+// The width and height of the chip-8's display
 #define CRISP8_DISPLAY_WIDTH 64
 #define CRISP8_DISPLAY_HEIGHT 32
 
+// Helper macros to write your input callback
 #define CRISP8_KEYPAD_0 (1 << 0x0)
 #define CRISP8_KEYPAD_1 (1 << 0x1)
 #define CRISP8_KEYPAD_2 (1 << 0x2)

@@ -409,10 +409,9 @@ static void opAddToIndex (uint16_t instruction, chip8 emulator)
 static void opGetKey (uint16_t instruction, chip8 emulator)
 {
     // A key is registered on release, so we have to do some funky stuff
-    uint32_t keyMapOld = emulator->inputCb ();
-    uint32_t keyMapNew = emulator->inputCb ();
+    uint32_t keyMap = emulator->inputCb ();
 
-    if (!keyMapOld || keyMapNew == keyMapOld)
+    if (!emulator->lastKeyState || keyMap == emulator->lastKeyState)
     {
         emulator->PC -= 2;
     }
@@ -420,7 +419,7 @@ static void opGetKey (uint16_t instruction, chip8 emulator)
     {
         for (int i = 0; i <= 0xF; i++)
         {
-            if (NTH_BIT (keyMapOld, i) && !NTH_BIT (keyMapNew, i))
+            if (NTH_BIT (emulator->lastKeyState, i) && !NTH_BIT (keyMap, i))
             {
                 emulator->V [INSTRUCTION_GET_X (instruction)] = i;
                 break;

@@ -214,6 +214,9 @@ void crisp8RunCycle (chip8 emulator)
     uint16_t instruction = fetchInstruction (emulator);
     // Decode and execute
     dispatchInstruction (instruction, emulator);
+
+    // Get the current keyState
+    emulator->lastKeyState = emulator->inputCb ();
 }
 
 const uint8_t* const crisp8GetFramebuffer (chip8 emulator)

@@ -60,5 +60,8 @@ struct chip8_s
 
     // Configuration for some ambiguous instructions
     struct crisp8Config config;
+
+    // Last cycles keystate (used to check for key release)
+    uint32_t lastKeyState;
 };
 #endif

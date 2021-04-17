@@ -12,12 +12,23 @@ struct chip8Stack_s
     uint16_t* stackPtr;
 };
 
-// Increments the stack pointer (amount should probably always be 1 or -1)
+// Increments the stack pointer.
+//
+// Parameters:
+//  stack: The stack to operate on
+//  amount: the amount to increment by. It should probably always be 1 or -1, but if you know what you're doing it's
+//          capable of anything
 static void incrementStackPtr (chip8Stack stack, int16_t amount)
 {
     stack->stackPtr += amount;
 }
 
+// Decrement the stack pointer
+//
+// Parameters:
+//  stack: The stack to operate on
+//  amount: the amount to decrement by. It should probably always be 1 or -1, but if you know what you're doing it's
+//          capable of anything
 static void decrementStackPtr (chip8Stack stack, int16_t amount)
 {
     incrementStackPtr (stack, -amount);
